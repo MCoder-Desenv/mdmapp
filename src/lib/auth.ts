@@ -56,7 +56,7 @@ export const authOptions: AuthOptions = {
         // Adiciona o ID e o email do usuário à sessão
         session.user.id = token.id as string;
         session.user.email = token.email as string;
-        console.log("teste34798675"); // Log para verificar a chamada do callback de sessão
+        //console.log("teste34798675"); // Log para verificar a chamada do callback de sessão
       }
       return session; // Retorna a sessão atualizada
     },

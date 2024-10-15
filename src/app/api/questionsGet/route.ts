@@ -9,7 +9,7 @@ export async function GET() {
         options: true, // Inclui as opções relacionadas à pergunta
       },
     });
-    console.log('teste ta passando:', questions)
+
     // Retorna as perguntas com as opções no formato JSON
     return NextResponse.json(questions, { status: 200 });
   } catch (error) {

@@ -40,6 +40,18 @@ export default function Questionario() {
 
   const { data: session, status } = useSession();
 
+  useEffect(() => {
+    if (status === 'loading') {
+      return;
+    }  // Adicione este retorno para evitar renderização antes da autenticação
+  
+    if (status === 'unauthenticated') {
+        router.push('/');
+    }
+  }, [status, router]);
+
+  //alert("idjhsifhidhsifods")
+
   // useEffect para verificar se o usuário já respondeu ao questionário
   useEffect(() => {
     const checkAnswered = async () => {
@@ -49,14 +61,12 @@ export default function Questionario() {
             userId: Number(session?.user.id),
           });
   
-          console.log(response); // Verifique o conteúdo retornado
+          //console.log(response); // Verifique o conteúdo retornado
   
           // Verifica se `response.data` é um array
           if (response.status === 200) {
-            console.log('teste1')
             setHasAnswered(true);
           } else {
-            console.log('teste12')
             setHasAnswered(false);
           }
         } catch (error) {
@@ -69,7 +79,7 @@ export default function Questionario() {
     checkAnswered();
   }, [session, status]);
 
-  console.log(hasAnswered)
+  //console.log(hasAnswered)
 
   // Verifica se estamos no lado do cliente
   useEffect(() => {
@@ -154,7 +164,6 @@ export default function Questionario() {
     );
   }
 
-
   return (
     
     <main className="flex justify-center items-center min-h-screen p-4 bg-gray-100">
@@ -223,7 +232,7 @@ export default function Questionario() {
               onClick={handleNext}
               className="px-4 py-2 bg-[#BFB2A3] text-white rounded-lg hover:bg-[#a68d83] transition-all duration-300 ease-in-out"
             >
-              {currentQuestion < questions.length - 1 ? "Next" : "Enviar"}
+              {currentQuestion < questions.length - 1 ? "Nex" : "Enviar"}
             </button>
           </div>
         </div>

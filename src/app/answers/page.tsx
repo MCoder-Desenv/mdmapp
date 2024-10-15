@@ -52,11 +52,13 @@ export default function Relatorio() {
             setData(null);
           }
         } catch (error) {
-          console.error('Erro ao buscar dados do relatório:', error);
+          alert("Erro ao buscar dados do relatório")
+          //console.error('Erro ao buscar dados do relatório:', error);
         }
       } else {
         setData(null);
-        console.log("Usuário não autenticado ou userId não encontrado");
+        alert("Você não tem permissão para acessar o relátorio")
+        //console.log("Usuário não autenticado ou userId não encontrado");
       }
     }
 

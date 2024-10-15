@@ -4,13 +4,25 @@ import { useSession } from 'next-auth/react';
 import { Login } from '@/components/login';
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 import { Header } from "@/components/header";
 import { SideBar } from "@/components/sideBar";
 
 export default function Dashboard() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [hasAnswered, setHasAnswered] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (status === 'loading') {
+      return;
+    }  // Adicione este retorno para evitar renderização antes da autenticação
+  
+    if (status === 'unauthenticated') {
+        router.push('/');
+    }
+  }, [status, router]);
 
   useEffect(() => {
     const checkAnswered = async () => {
@@ -20,14 +32,12 @@ export default function Dashboard() {
             userId: Number(session?.user.id),
           });
   
-          console.log(response); // Verifique o conteúdo retornado
+          //console.log(response); // Verifique o conteúdo retornado
   
           // Verifica se `response.data` é um array
           if (response.status === 200) {
-            console.log('teste1')
             setHasAnswered(true);
           } else {
-            console.log('teste12')
             setHasAnswered(false);
           }
         } catch (error) {

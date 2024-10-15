@@ -6,11 +6,11 @@ import prismaClient from '@/lib/prisma'
 
 
 export async function POST(request: Request){
-//   const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-//   if(!session || !session.user){
-//     return NextResponse.json({ error: "Not authorized" }, { status: 401 })
-//   }
+  if(!session || !session.user){
+    return NextResponse.json({ error: "Not authorized" }, { status: 401 })
+  }
 
   const { questionText, options } = await request.json();
 
