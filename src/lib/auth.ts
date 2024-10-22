@@ -34,7 +34,9 @@ export const authOptions: AuthOptions = {
         // Verifica se o usuário foi encontrado e se a senha está correta
         if (user && await bcrypt.compare(credentials.password, user.password)) {
           // Se estiver tudo certo, retorna os dados do usuário (sem a senha)
-          return { id: user.id.toString(), name: user.name, email: user.email };
+          console.log("retorno da imagem: ", user.image);
+          console.log("retorno do tipo do usúario: ", user.typeUser);
+          return { id: user.id.toString(), name: user.name, email: user.email, image: user.image, typeUser: user.typeUser };
         }
         return null; // Retorna null se a autenticação falhar
       },
@@ -47,6 +49,7 @@ export const authOptions: AuthOptions = {
         // Adiciona o ID e email do usuário ao token
         token.id = user.id;
         token.email = user.email;
+        token.picture = user.image;
       }
       return token; // Retorna o token atualizado
     },
@@ -56,6 +59,7 @@ export const authOptions: AuthOptions = {
         // Adiciona o ID e o email do usuário à sessão
         session.user.id = token.id as string;
         session.user.email = token.email as string;
+        session.user.image = token.picture as string;
         //console.log("teste34798675"); // Log para verificar a chamada do callback de sessão
       }
       return session; // Retorna a sessão atualizada

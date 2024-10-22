@@ -52,7 +52,11 @@ export function Login() {
     });
 
     if (res?.error) {
-      alert(res.error);
+      if (res?.status == 401) {
+        alert("Senha incorreta");
+      }else {
+        alert(res.error);
+      }
     } else {
       await new Promise((resolve) => setTimeout(resolve, 100)); // Aguardar breve período
       alert('Logou com sucesso');

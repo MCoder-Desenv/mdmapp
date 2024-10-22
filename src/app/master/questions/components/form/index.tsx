@@ -5,6 +5,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/input'
 import { api } from '@/lib/api'
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 // Define as opções disponíveis para optionValue
 const optionValues = ["Inocente", "Coadjuvante", "Aleatorio", "Intencional"] as const;
@@ -29,6 +32,19 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function NewQuestionForm() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'loading') {
+      return;
+    }  // Adicione este retorno para evitar renderização antes da autenticação
+  
+    if (status === 'unauthenticated') {
+        router.push('/');
+    }
+  }, [status, router]);
+  
   const { register, control, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {

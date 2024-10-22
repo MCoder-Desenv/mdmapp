@@ -27,6 +27,9 @@ export function Header (){
       
       {status === "authenticated" ?
           <div className="absolute bottom-2 right-16 flex items-center gap-4">
+            <Link href="/perfil">
+              <FiUser size={26} color="#4b5563" />
+            </Link>
             <button onClick={handleLogout}>
               <FiLogOut size={26} color="#ff2313" />
             </button>
