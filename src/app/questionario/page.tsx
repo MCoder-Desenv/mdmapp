@@ -106,6 +106,8 @@ export default function Questionario() {
     fetchQuestions();
   }, []);
 
+  console.log(questions);
+
   // Função para avançar para a próxima pergunta ou enviar o quiz
   const handleNext = async () => {
     if (!answers[currentQuestion]) {
