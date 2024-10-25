@@ -25,7 +25,7 @@ const registerSchema = z.object({
 type UserDataLogin = z.infer<typeof loginSchema>;
 type UserDataRegister = z.infer<typeof registerSchema>;
 
-export function Register() {
+export default function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false); // Controle para alternar entre login e registro

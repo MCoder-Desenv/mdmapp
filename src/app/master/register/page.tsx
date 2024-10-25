@@ -1,6 +1,6 @@
 //import Image from "next/image";
 'use client'
-import Dashboard from "@/components/dashboard";
+import Register from "@/components/register";
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { useEffect } from "react";
@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <main>
-      <Dashboard />
+      <Register />
     </main>
   );
 }
