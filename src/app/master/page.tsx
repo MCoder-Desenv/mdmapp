@@ -29,6 +29,9 @@ const MasterDashboard = () => {
           <li>
             <Link href="/master/questions">Gerenciar Perguntas</Link>
           </li>
+          <li>
+            <Link href="/master/register">Criar Usuário</Link>
+          </li>
         </ul>
       </nav>
     </div>

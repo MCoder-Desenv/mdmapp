@@ -15,15 +15,8 @@ const loginSchema = z.object({
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-// Esquema de validação para registro
-const registerSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
-  email: z.string().email("Email inválido").min(1, "Email é obrigatório"),
-  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-});
 
 type UserDataLogin = z.infer<typeof loginSchema>;
-type UserDataRegister = z.infer<typeof registerSchema>;
 
 export function Login() {
   const router = useRouter();
@@ -34,11 +27,6 @@ export function Login() {
   // Hooks de formulário para login
   const { register, handleSubmit, formState: { errors } } = useForm<UserDataLogin>({
     resolver: zodResolver(loginSchema),
-  });
-
-  // Hooks de formulário para registro
-  const { register: registerRegister, handleSubmit: handleSubmitRegister, formState: { errors: registerErrors }, reset } = useForm<UserDataRegister>({
-    resolver: zodResolver(registerSchema),
   });
 
   // Função para login
@@ -66,32 +54,6 @@ export function Login() {
     setLoading(false);
   };
 
-  // Função para registrar novo usuário
-  const handleRegister = async (data: UserDataRegister) => {
-    try {
-      setLoading(true);
-
-      const response = await api.post('/api/register', {
-        name: data.name,
-        email: data.email,
-        password: data.password
-      });
-
-      if (response.status === 200) {
-        alert('Cadastro realizado com sucesso!');
-        reset(); // Limpa os campos do formulário
-        setIsRegistering(false); // Alterna para o formulário de login
-      } else {
-        console.error('Erro ao cadastrar:', response.data);
-        alert('Ocorreu um erro ao cadastrar.');
-      }
-    } catch (error) {
-      alert("Erro ao criar conta");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Função para logout
   const handleLogout = async () => {
     await signOut();
@@ -116,46 +78,7 @@ export function Login() {
           </div>
         ) : (
           <div>
-            {isRegistering ? (
-              // Formulário de Registro
-              <form className="flex flex-col" onSubmit={handleSubmitRegister(handleRegister)}>
-                <input
-                  type="text"
-                  placeholder="Nome"
-                  className="mb-2 p-2 border border-gray-300 rounded"
-                  {...registerRegister('name')}
-                />
-                {registerErrors.name && <span className="text-red-500">{registerErrors.name.message}</span>}
-
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="mb-2 p-2 border border-gray-300 rounded"
-                  {...registerRegister('email')}
-                />
-                {registerErrors.email && <span className="text-red-500">{registerErrors.email.message}</span>}
-
-                <input
-                  type="password"
-                  placeholder="Senha"
-                  className="mb-2 p-2 border border-gray-300 rounded"
-                  {...registerRegister('password')}
-                />
-                {registerErrors.password && <span className="text-red-500">{registerErrors.password.message}</span>}
-
-                <button type="submit" className="mb-4 bg-blue-500 text-white p-2 rounded">
-                  {loading ? 'Carregando...' : 'Registrar'}
-                </button>
-
-                <p className="text-center">
-                  Já tem uma conta?{' '}
-                  <span className="text-blue-500 underline cursor-pointer" onClick={() => setIsRegistering(false)}>
-                    Fazer login
-                  </span>
-                </p>
-              </form>
-            ) : (
-              // Formulário de Login
+              {/* Formulário de Login */}
               <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
                 <input
                   type="email"
@@ -176,16 +99,7 @@ export function Login() {
                 <button type="submit" className="mb-4 bg-blue-500 text-white p-2 rounded">
                   {loading ? 'Carregando...' : 'Entrar'}
                 </button>
-                {status === "unauthenticated" && (
-                  <p className="text-center">
-                    Não tem uma conta?{' '}
-                    <span className="text-blue-500 underline cursor-pointer" onClick={() => setIsRegistering(true)}>
-                      Criar conta
-                    </span>
-                  </p>
-                  )}
               </form>
-            )}
           </div>
         )}
       </div>
