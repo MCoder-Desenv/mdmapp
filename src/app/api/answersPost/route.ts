@@ -10,11 +10,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Not authorized" }, { status: 401 });
   }
 
-  // if (session.user.id == '1') {
-  //   console.log("usuario duplicado")
-  //   return NextResponse.json({ error: "usuario duplicado" }, { status: 401 });
-  // }
-
   const { answers } = await request.json(); // Esperando um array de respostas
 
   if (!Array.isArray(answers) || answers.length === 0) {

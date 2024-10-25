@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       const reportData: { [key: string]: number } = {
         Inocente: 0,
         Coadjuvante: 0,
-        Aleatório: 0,
+        Aleatorio: 0,
         Intencional: 0,
       };
 

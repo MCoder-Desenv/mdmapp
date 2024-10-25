@@ -9,20 +9,19 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; // Importar o useRouter
 import React from 'react'
 import ReactPlayer from 'react-player'
+import Link from 'next/link';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 interface ReportData {
   Inocente: number;
   Coadjuvante: number;
-  Aleatório: number;
+  Aleatorio: number;
   Intencional: number;
 }
 
 export default function Relatorio() {
   const [data, setData] = useState<ReportData | null>(null);
-  const [description, setDescription] = useState('');
-  const [improvementMessage, setImprovementMessage] = useState('');
   const { data: session, status } = useSession();
   const [playerSize, setPlayerSize] = useState({ width: '100%', height: 'auto' });
   const router = useRouter(); // Inicializar o router
@@ -47,7 +46,7 @@ export default function Relatorio() {
           const reportData = await response.data;
           if (response.status === 200) {
             setData(reportData);
-            generateImprovementMessage(reportData);
+
           } else {
             setData(null);
           }
@@ -65,32 +64,11 @@ export default function Relatorio() {
     fetchData();
   }, [session, status]);
 
-  // Função para gerar a mensagem de melhoria com base nos percentuais
-  const generateImprovementMessage = (reportData: ReportData) => {
-    const categories = ['Inocente', 'Coadjuvante', 'Aleatório', 'Intencional'];
-    const sortedCategories = categories.sort((a, b) => reportData[b as keyof ReportData] - reportData[a as keyof ReportData]);
-
-    const highest = sortedCategories[0];
-    const secondHighest = sortedCategories[1];
-
-    let message = '';
-
-    if (highest === 'Inocente' && secondHighest === 'Aleatório') {
-      message = 'Você parece ser uma pessoa muito empática, mas em algumas situações pode agir de forma despretensiosa. Tente manter o foco!';
-    } else if (highest === 'Intencional') {
-      message = 'Você é uma pessoa determinada! Continue assim, mas cuide para não ignorar outros pontos de vista.';
-    } else if (highest === 'Coadjuvante') {
-      message = 'Você prefere apoiar, o que é ótimo, mas também busque tomar a frente quando necessário!';
-    }
-    // Outras combinações podem ser adicionadas conforme necessário
-    setImprovementMessage(message);
-  };
-
   // Lógica para calcular os dados do gráfico com porcentagens
   const calculateChartData = (data: ReportData | null) => {
     if (!data) return { labels: [], values: [] };
 
-    const categories: (keyof ReportData)[] = ['Inocente', 'Coadjuvante', 'Aleatório', 'Intencional'];
+    const categories: (keyof ReportData)[] = ['Inocente', 'Coadjuvante', 'Aleatorio', 'Intencional'];
     const values = categories.map((category) => data[category]);
 
     const total = values.reduce((sum, value) => sum + value, 0);
@@ -193,17 +171,15 @@ export default function Relatorio() {
         </>
       ) : (
         <div className="mt-4">
-            <h2 className="text-xl font-semibold">Assista o vídeo</h2>
-            <div className="mt-4 w-full flex justify-center">
-              <ReactPlayer
-                url='https://www.youtube.com/watch?v=SPzrhtGjL_U'
-                controls
-                width={playerSize.width} // Define a largura do player com base na tela
-                height={playerSize.height} // Define a altura do player como auto
-                style={{ maxWidth: '1920px', height: '1080px' }} // Define limites máximos para o player
-              />
+            {/* Box centralizado */}
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl mx-4 mt-16">
+                <h1 className="text-2xl font-semibold mb-4">Atenção, {session?.user?.name}!</h1>
+                    <p className="text-lg text-red-600">Você ainda não respondeu ao questionário. Por favor, complete o <Link className='text-stone-950' href="/questionario">questionário.</Link></p>
+                </div>
             </div>
           </div>
+          
       )}
     </main>
   );
