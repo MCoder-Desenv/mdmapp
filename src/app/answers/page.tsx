@@ -160,7 +160,7 @@ export default function Relatorio() {
             <h2 className="text-xl font-semibold">Assista o vídeo</h2>
             <div className="mt-4 w-full flex justify-center">
               <ReactPlayer
-                url='https://www.youtube.com/watch?v=SPzrhtGjL_U'
+                url='https://youtu.be/ev9rKQT7yCU'
                 controls
                 width={playerSize.width} // Define a largura do player com base na tela
                 height={playerSize.height} // Define a altura do player como auto
