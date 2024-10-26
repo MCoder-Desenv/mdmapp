@@ -15,7 +15,6 @@ const loginSchema = z.object({
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-
 type UserDataLogin = z.infer<typeof loginSchema>;
 
 export function Login() {
@@ -42,7 +41,7 @@ export function Login() {
     if (res?.error) {
       if (res?.status == 401) {
         alert("Senha incorreta");
-      }else {
+      } else {
         alert(res.error);
       }
     } else {
@@ -50,7 +49,7 @@ export function Login() {
       alert('Logou com sucesso');
       router.push('/questionario');
     }
-  
+
     setLoading(false);
   };
 
@@ -60,8 +59,8 @@ export function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+    <div className="flex flex-col items-center justify-center min-h-screen flex-1">
+      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm m-4">
         <h2 className="text-2xl font-bold mb-4">
           {status === "authenticated" ? "Bem-vindo" : isRegistering ? "Registrar" : "Login"}
         </h2>
@@ -78,28 +77,28 @@ export function Login() {
           </div>
         ) : (
           <div>
-              {/* Formulário de Login */}
-              <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="mb-2 p-2 border border-gray-300 rounded"
-                  {...register('email')}
-                />
-                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+            {/* Formulário de Login */}
+            <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
+              <input
+                type="email"
+                placeholder="Email"
+                className="mb-2 p-2 border border-gray-300 rounded"
+                {...register('email')}
+              />
+              {errors.email && <span className="text-red-500">{errors.email.message}</span>}
 
-                <input
-                  type="password"
-                  placeholder="Senha"
-                  className="mb-2 p-2 border border-gray-300 rounded"
-                  {...register('password')}
-                />
-                {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+              <input
+                type="password"
+                placeholder="Senha"
+                className="mb-2 p-2 border border-gray-300 rounded"
+                {...register('password')}
+              />
+              {errors.password && <span className="text-red-500">{errors.password.message}</span>}
 
-                <button type="submit" className="mb-4 bg-blue-500 text-white p-2 rounded">
-                  {loading ? 'Carregando...' : 'Entrar'}
-                </button>
-              </form>
+              <button type="submit" className="mb-4 bg-blue-500 text-white p-2 rounded">
+                {loading ? 'Carregando...' : 'Entrar'}
+              </button>
+            </form>
           </div>
         )}
       </div>
