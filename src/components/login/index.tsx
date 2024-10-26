@@ -59,8 +59,8 @@ export function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen flex-1">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm m-4">
+    <div className="flex items-center justify-center h-screen">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md m-4">
         <h2 className="text-2xl font-bold mb-4">
           {status === "authenticated" ? "Bem-vindo" : isRegistering ? "Registrar" : "Login"}
         </h2>
