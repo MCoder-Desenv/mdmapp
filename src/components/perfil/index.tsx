@@ -66,7 +66,7 @@ export default function Perfil() {
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
       <div className="text-center mb-6 relative">
-        <label htmlFor="imageUpload" className="relative cursor-pointer inline-block">
+        {/* <label htmlFor="imageUpload" className="relative cursor-pointer inline-block">
           <img
             src={image ? URL.createObjectURL(image) : session?.user?.image || '/default-profile.png'}
             alt="Imagem de perfil"
@@ -80,7 +80,7 @@ export default function Perfil() {
             className="hidden"
             onChange={handleImageChange}
           />
-        </label>
+        </label> */}
 
         <input
           type="text"
