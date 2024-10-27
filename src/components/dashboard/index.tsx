@@ -60,9 +60,9 @@ export default function Dashboard() {
     <>
       {status === 'unauthenticated' ? (
         // Renderiza o componente de Login se o usuário não estiver autenticado
-       <div className='flex'>
+
         <Login />
-       </div>
+
       ) : (
         // Caso o usuário esteja logado, exibe a mensagem
         <div>

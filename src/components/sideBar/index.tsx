@@ -15,7 +15,7 @@ interface User {
 }
 
 export function SideBar() {
-  const [isCollapsed, setIsCollapsed] = useState(false); // Estado para controlar a visibilidade da sidebar
+  const [isCollapsed, setIsCollapsed] = useState(true); // Estado para controlar a visibilidade da sidebar
   const [user, setUser] = useState<User | null>(null); // Estado para armazenar os dados do usuário
   const { data: session, status } = useSession();
 
